@@ -64,10 +64,10 @@ public class RoboDancerLinear extends LinearOpMode {
             double LB = hw.clipPower(drive + strafe + rotate) * coeff;
             double LF = hw.clipPower(drive + strafe + rotate) * coeff;
 
-            hw.leftFront.setPower(LF);
+            /*hw.leftFront.setPower(LF);
             hw.leftBack.setPower(LB);
             hw.rightFront.setPower(RF);
-            hw.rightBack.setPower(RB);
+            hw.rightBack.setPower(RB);*/
 
             telemetry.addData("State", dancingState);
             telemetry.addLine();
@@ -258,10 +258,10 @@ public class RoboDancerLinear extends LinearOpMode {
         for(int cont = 0; cont < NrReps; cont++){
             ElapsedTime timer = new ElapsedTime();
             while(timer.milliseconds() < Timer){
-                hw.leftBack.setPower(0.5);
+                /*hw.leftBack.setPower(0.5);
                 hw.leftFront.setPower(-0.5);
                 hw.rightBack.setPower(-0.5);
-                hw.rightFront.setPower(0.5);
+                hw.rightFront.setPower(0.5);*/
             }
         }
     }
@@ -269,10 +269,10 @@ public class RoboDancerLinear extends LinearOpMode {
         for(int cont = 0; cont < NrReps; cont++){
             ElapsedTime timer = new ElapsedTime();
             while(timer.milliseconds() < Timer){
-                hw.leftBack.setPower(-0.5);
+                /*hw.leftBack.setPower(-0.5);
                 hw.leftFront.setPower(0.5);
                 hw.rightBack.setPower(0.5);
-                hw.rightFront.setPower(-0.5);
+                hw.rightFront.setPower(-0.5);*/
             }
         }
     }

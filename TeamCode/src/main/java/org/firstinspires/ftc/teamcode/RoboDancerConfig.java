@@ -9,10 +9,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class RoboDancerConfig {
-    public DcMotor rightFront;
+    /*public DcMotor rightFront;
     public DcMotor leftFront;
     public DcMotor rightBack;
-    public DcMotor leftBack;
+    public DcMotor leftBack;*/
     public Servo Dr1;
     public Servo Dr2;
     public Servo Dr3;
@@ -25,10 +25,10 @@ public class RoboDancerConfig {
 
 
     public RoboDancerConfig(HardwareMap hw) {
-        rightBack = hw.get(DcMotor.class, "rightBack");
+        /*rightBack = hw.get(DcMotor.class, "rightBack");
         rightFront = hw.get(DcMotor.class, "rightFront");
         leftBack = hw.get(DcMotor.class, "leftBack");
-        leftFront = hw.get(DcMotor.class, "leftFront");
+        leftFront = hw.get(DcMotor.class, "leftFront");*/
 
         Dr1 = hw.get(Servo.class, "dreapta1");
         Dr2 = hw.get(Servo.class, "dreapta2");
