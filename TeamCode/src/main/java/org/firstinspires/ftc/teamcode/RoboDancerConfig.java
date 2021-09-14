@@ -38,6 +38,9 @@ public class RoboDancerConfig {
     public static int st4Pos = 0;
     public static int dr4Pos = 0;
 
+    public static double lastSt4 = Double.NaN;
+    public static double lastDr4 = Double.NaN;
+
     public RoboDancerConfig(HardwareMap hw) {
         /*rightBack = hw.get(DcMotor.class, "rightBack");
         rightFront = hw.get(DcMotor.class, "rightFront");
@@ -55,6 +58,8 @@ public class RoboDancerConfig {
         St4 = hw.get(DcMotorEx.class, "stanga4");
 
         cap = hw.get(Servo.class, "cap");
+
+        Dr4.setDirection(DcMotorSimple.Direction.REVERSE);
 
         File file = AppUtil.getInstance().getSettingsFile(calibrationFileName);
         String json = ReadWriteFile.readFile(file);
@@ -83,10 +88,28 @@ public class RoboDancerConfig {
 
     public void motorSetPosition(DcMotorEx motor, double position, int maxPos, double power) {
 
+        int pos = (int)(maxPos * position);
+
+        if(motor == St4) {
+            if(lastSt4 == Double.NaN)
+                lastSt4 = position;
+            else if(lastSt4 == position)
+                return;
+            else
+                lastSt4 = position;
+        }
+        else if(motor == Dr4) {
+            if(lastDr4 == Double.NaN)
+                lastDr4 = position;
+            else if(lastDr4 == position)
+                return;
+            else
+                lastDr4 = position;
+        }
+
         motor.setPower(0);
         motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        int pos = (int)(maxPos * position);
 
         motor.setTargetPosition(pos);
         motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
