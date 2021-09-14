@@ -31,13 +31,13 @@ public class MotorCalibration extends LinearOpMode {
 
         waitForStart();
 
-        telemetry.addData("St4", "Set to 0 position then press 'x'");
+        telemetry.addData("St4", "Set to eagle position then press 'x'");
         telemetry.update();
 
         while(!gamepad1.x);
         hw.resetEncoder(hw.St4);
 
-        telemetry.addData("St4", "Set to 1 position then press 'y'");
+        telemetry.addData("St4", "Set to forward position then press 'y'");
         telemetry.update();
 
         while(!gamepad1.y) {
@@ -46,13 +46,13 @@ public class MotorCalibration extends LinearOpMode {
         st4Pos = hw.St4.getCurrentPosition();
 
         ////////////////////////////// Dr4
-        telemetry.addData("Dr4", "Set to 0 position then press 'x'");
+        telemetry.addData("Dr4", "Set to eagle position then press 'x'");
         telemetry.update();
 
         while(!gamepad1.x);
         hw.resetEncoder(hw.Dr4);
 
-        telemetry.addData("Dr4", "Set to 1 position then press 'y'");
+        telemetry.addData("Dr4", "Set to forward position then press 'y'");
         telemetry.update();
 
         while(!gamepad1.y) {
@@ -62,9 +62,18 @@ public class MotorCalibration extends LinearOpMode {
 
         //TODO: write values to file (JSON maybe?)
 
+        double stEagle = 0.23;
+        double drEagle = 0.75;
+
+        double stFwd = 0.58;
+        double drFwd = 0.41;
+
+        int st = (int)(st4Pos / (stFwd-stEagle));
+        int dr = (int)(dr4Pos / (drFwd-drEagle));
+
         Map<String, Integer> calibratinData = new HashMap<String, Integer>();
-        calibratinData.put("st4Pos", st4Pos);
-        calibratinData.put("dr4Pos", dr4Pos);
+        calibratinData.put("st4Pos", st);
+        calibratinData.put("dr4Pos", dr);
 
         File file = AppUtil.getInstance().getSettingsFile(hw.calibrationFileName);
         ReadWriteFile.writeFile(file, new Gson().toJson(calibratinData));
