@@ -1,12 +1,21 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ReadWriteFile;
 
+import org.firstinspires.ftc.robotcore.internal.system.AppUtil;
+
+import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RoboDancerConfig {
     /*public DcMotor rightFront;
@@ -16,13 +25,18 @@ public class RoboDancerConfig {
     public Servo Dr1;
     public Servo Dr2;
     public Servo Dr3;
-    public Servo Dr4;
+    public DcMotorEx Dr4;
     public Servo St1;
     public Servo St2;
     public Servo St3;
-    public Servo St4;
+    //public Servo St4;
+    public DcMotorEx St4;
     public Servo cap;
 
+    String calibrationFileName = "roboDansatorCalibration.json";
+
+    public static int st4Pos = 0;
+    public static int dr4Pos = 0;
 
     public RoboDancerConfig(HardwareMap hw) {
         /*rightBack = hw.get(DcMotor.class, "rightBack");
@@ -33,15 +47,51 @@ public class RoboDancerConfig {
         Dr1 = hw.get(Servo.class, "dreapta1");
         Dr2 = hw.get(Servo.class, "dreapta2");
         Dr3 = hw.get(Servo.class, "dreapta3");
-        Dr4 = hw.get(Servo.class, "dreapta4");
+        Dr4 = hw.get(DcMotorEx.class, "dreapta4");
 
         St1 = hw.get(Servo.class, "stanga1");
         St2 = hw.get(Servo.class, "stanga2");
         St3 = hw.get(Servo.class, "stanga3");
-        St4 = hw.get(Servo.class, "stanga4");
+        St4 = hw.get(DcMotorEx.class, "stanga4");
 
         cap = hw.get(Servo.class, "cap");
 
+        File file = AppUtil.getInstance().getSettingsFile(calibrationFileName);
+        String json = ReadWriteFile.readFile(file);
+
+        if(json != "") {
+            Map<String, Integer> calibrationData = new Gson().fromJson(json, new TypeToken<HashMap<String, Integer>>(){}.getType());
+
+            st4Pos = calibrationData.get("st4Pos");
+            dr4Pos = calibrationData.get("dr4Pos");
+        }
+
+    }
+
+    public void resetEncoders() {
+        St4.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        Dr4.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        St4.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        Dr4.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+    }
+
+    public void resetEncoder(DcMotorEx motor) {
+        motor.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        motor.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+    }
+
+    public void motorSetPosition(DcMotorEx motor, double position, int maxPos, double power) {
+
+        motor.setPower(0);
+        motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        int pos = (int)(maxPos * position);
+
+        motor.setTargetPosition(pos);
+        motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        motor.setPower(power);
     }
 
     public double clipPower(double power) {
