@@ -54,18 +54,37 @@ public class PIDTuner extends LinearOpMode {
                     hw.St4.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, st4CoeffVelo);
 
                 // run to position
-                /*if(gamepad1.dpad_left) {
-                    hw.motorSetPosition(hw.St4, 0.1, hw.st4Pos, RoboDancerDansuri.POWER4);
+                if(gamepad1.dpad_left) {
+                    int position = (int)(0.1 * hw.st4Pos);
+                    hw.St4.setPower(0);
+                    hw.St4.setTargetPosition(position);
 
-                    targetPosition = (int)(0.1 * hw.st4Pos);
+                    hw.St4.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    hw.St4.setPower(1);
+
+                    targetPosition = position;
+
+                    while(hw.St4.isBusy()) {
+                        telemetry.addData("currentPosition", hw.St4.getCurrentPosition());
+                        telemetry.addData("targetPosition", targetPosition);
+                        telemetry.update();
+                    }
                 } else if(gamepad1.dpad_right) {
-                    hw.motorSetPosition(hw.St4, 0.7, hw.st4Pos, RoboDancerDansuri.POWER4);
+                    int position = (int)(0.7 * hw.st4Pos);
+                    hw.St4.setPower(0);
+                    hw.St4.setTargetPosition(position);
 
-                    targetPosition = (int)(0.7 * hw.st4Pos);
-                }*/
-                hw.motorSetPosition(hw.St4, 0.7, hw.st4Pos, RoboDancerDansuri.POWER4);
+                    hw.St4.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                    hw.St4.setPower(1);
 
-                targetPosition = (int)(0.7 * hw.st4Pos);
+                    targetPosition = position;
+
+                    while(hw.St4.isBusy()) {
+                        telemetry.addData("currentPosition", hw.St4.getCurrentPosition());
+                        telemetry.addData("targetPosition", targetPosition);
+                        telemetry.update();
+                    }
+                }
 
                 // send values to dashboard
                 telemetry.addData("targetPosition", targetPosition);
