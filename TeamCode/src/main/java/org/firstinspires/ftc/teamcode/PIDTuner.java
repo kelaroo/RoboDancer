@@ -36,8 +36,8 @@ public class PIDTuner extends LinearOpMode {
 
         if(gamepad1.x) { ///////////////// st4
             // init coefficients
-            hw.St4.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, st4CoeffPos);
-            hw.St4.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, st4CoeffVelo);
+            /*hw.St4.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, st4CoeffPos);
+            hw.St4.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, st4CoeffVelo);*/
             PIDFCoefficients prevCoeffPos = st4CoeffPos;
             PIDFCoefficients prevCoeffVelo = st4CoeffVelo;
 
@@ -46,12 +46,12 @@ public class PIDTuner extends LinearOpMode {
                 currentPosition = hw.St4.getCurrentPosition();
 
                 // update coefficients
-                if(prevCoeffPos.p != st4CoeffPos.p || prevCoeffPos.i != st4CoeffPos.i
+                /*if(prevCoeffPos.p != st4CoeffPos.p || prevCoeffPos.i != st4CoeffPos.i
                         || prevCoeffPos.d != st4CoeffPos.d || prevCoeffPos.f != st4CoeffPos.f)
                     hw.St4.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, st4CoeffPos);
                 if(prevCoeffVelo.p != st4CoeffVelo.p || prevCoeffVelo.i != st4CoeffVelo.i
                         || prevCoeffVelo.d != st4CoeffVelo.d || prevCoeffVelo.f != st4CoeffVelo.f)
-                    hw.St4.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, st4CoeffVelo);
+                    hw.St4.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, st4CoeffVelo);*/
 
                 // run to position
                 if(gamepad1.dpad_left) {
@@ -60,7 +60,7 @@ public class PIDTuner extends LinearOpMode {
                     hw.St4.setTargetPosition(position);
 
                     hw.St4.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    hw.St4.setPower(1);
+                    hw.St4.setPower(0.6);
 
                     targetPosition = position;
 
@@ -75,7 +75,7 @@ public class PIDTuner extends LinearOpMode {
                     hw.St4.setTargetPosition(position);
 
                     hw.St4.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                    hw.St4.setPower(1);
+                    hw.St4.setPower(0.6);
 
                     targetPosition = position;
 
