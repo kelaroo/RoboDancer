@@ -19,15 +19,15 @@ public class RoboDancerDansuri extends LinearOpMode {
     public static double POWER4 = 1;
 
     // pozitii initiale
-    public static double dr1 = 0.84;
+    public static double dr1 = 0.86;
     public static double dr2 = 0.85;
     public static double dr3 = 1;
-    public static double dr4 = 0.75;
+    public static double dr4 = 0.15;
 
     public static double st1 = 0.52;
     public static double st2 = 0.1;
     public static double st3 = 0;
-    public static double st4 = 0.23;
+    public static double st4 = 0.13;
 
     public static double cap = 0.585;
 
@@ -744,12 +744,12 @@ public class RoboDancerDansuri extends LinearOpMode {
         hw.Dr1.setPosition(.75);
         hw.Dr2.setPosition(.85);
         hw.Dr3.setPosition(1);
-        hw.motorSetPosition(hw.Dr4, .14, hw.dr4Pos, POWER4);
+        hw.motorSetPosition(hw.Dr4, .8, hw.dr4Pos, POWER4);
 
         hw.St1.setPosition(.52);
         hw.St2.setPosition(.1);
         hw.St3.setPosition(0);
-        hw.motorSetPosition(hw.St4, 0.23, hw.st4Pos, POWER4);
+        hw.motorSetPosition(hw.St4, 0.13, hw.st4Pos, POWER4);
 
         hw.cap.setPosition(.65);
 
@@ -760,12 +760,12 @@ public class RoboDancerDansuri extends LinearOpMode {
         hw.Dr1.setPosition(.84);
         hw.Dr2.setPosition(.85);
         hw.Dr3.setPosition(1);
-        hw.motorSetPosition(hw.Dr4, .74, hw.dr4Pos, POWER4);
+        hw.motorSetPosition(hw.Dr4, .15, hw.dr4Pos, POWER4);
 
-        hw.St1.setPosition(.65);
+        hw.St1.setPosition(.7);
         hw.St2.setPosition(.15);
         hw.St3.setPosition(0);
-        hw.motorSetPosition(hw.St4, 0.8, hw.st4Pos, POWER4);
+        hw.motorSetPosition(hw.St4, .7, hw.st4Pos, POWER4);
 
         hw.cap.setPosition(.5);
 
@@ -778,21 +778,21 @@ public class RoboDancerDansuri extends LinearOpMode {
             hw.cap.setPosition(.585);
             hw.Dr2.setPosition(0.5);
             hw.Dr3.setPosition(1);
-            hw.motorSetPosition(hw.Dr4, 0.74, hw.dr4Pos, POWER4);
+            hw.motorSetPosition(hw.Dr4, .15, hw.dr4Pos, POWER4);
             waitTimer(150);
 
             hw.St2.setPosition(.45);
             hw.St3.setPosition(0);
-            hw.motorSetPosition(hw.St4, 0.23, hw.st4Pos, POWER4);
+            hw.motorSetPosition(hw.St4, .13, hw.st4Pos, POWER4);
             waitTimer(150);
-
         }
+
         hw.St1.setPosition(0.9);
-        hw.Dr1.setPosition(0.9);
+        hw.Dr1.setPosition(0.7);
         waitTimer(500);
 
-        hw.Dr1.setPosition(0.4);
-        hw.St1.setPosition(0.4);
+        hw.Dr1.setPosition(0.5);
+        hw.St1.setPosition(0.6);
         waitTimer(500);
     }
 
