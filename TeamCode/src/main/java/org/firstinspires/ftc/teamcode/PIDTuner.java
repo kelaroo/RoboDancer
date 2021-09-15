@@ -5,6 +5,7 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.MotorControlAlgorithm;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 @Config
@@ -13,8 +14,18 @@ public class PIDTuner extends LinearOpMode {
 
     RoboDancerConfig hw;
 
-    public static PIDFCoefficients st4CoeffPos = new PIDFCoefficients(0, 0, 0, 0);
-    public static PIDFCoefficients st4CoeffVelo = new PIDFCoefficients(0, 0, 0, 0);
+    public static PIDFCoefficients st4CoeffPos = new PIDFCoefficients(10, 0, 0, 0, MotorControlAlgorithm.LegacyPID);
+    public static PIDFCoefficients st4CoeffVelo = new PIDFCoefficients(10, 0, 0, 0);
+
+    public static double Pvelo = 0;
+    public static double Ivelo = 0;
+    public static double Dvelo = 0;
+    public static double Fvelo = 0;
+
+    public static double Ppos = 0;
+    public static double Ipos = 0;
+    public static double Dpos = 0;
+    public static double Fpos = 0;
 
     public static int currentPosition = 0;
     public static int targetPosition = 0;
@@ -24,6 +35,9 @@ public class PIDTuner extends LinearOpMode {
 
         hw = new RoboDancerConfig(hardwareMap);
         telemetry = FtcDashboard.getInstance().getTelemetry();
+
+        st4CoeffPos = hw.St4.getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION);
+        st4CoeffVelo = hw.St4.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
 
         waitForStart();
 
@@ -38,20 +52,37 @@ public class PIDTuner extends LinearOpMode {
             // init coefficients
             /*hw.St4.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, st4CoeffPos);
             hw.St4.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, st4CoeffVelo);*/
-            PIDFCoefficients prevCoeffPos = st4CoeffPos;
-            PIDFCoefficients prevCoeffVelo = st4CoeffVelo;
+            PIDFCoefficients prevCoeffPos = new PIDFCoefficients(st4CoeffPos);
+            PIDFCoefficients prevCoeffVelo = new PIDFCoefficients(st4CoeffVelo);
 
+            Pvelo = st4CoeffVelo.p;
+            Ivelo = st4CoeffVelo.i;
+            Dvelo = st4CoeffVelo.d;
+            Fvelo = st4CoeffVelo.f;
+
+            Ppos = st4CoeffPos.p;
+            Ipos = st4CoeffPos.i;
+            Dpos = st4CoeffPos.d;
+            Fpos = st4CoeffPos.f;
+
+            int cox = 0;
             // main loop
             while(opModeIsActive()) {
                 currentPosition = hw.St4.getCurrentPosition();
 
                 // update coefficients
-                /*if(prevCoeffPos.p != st4CoeffPos.p || prevCoeffPos.i != st4CoeffPos.i
-                        || prevCoeffPos.d != st4CoeffPos.d || prevCoeffPos.f != st4CoeffPos.f)
+                if(Ppos != st4CoeffPos.p || Ipos != st4CoeffPos.i
+                        || Dpos != st4CoeffPos.d || Fpos != st4CoeffPos.f) {
+                    st4CoeffPos = new PIDFCoefficients(Ppos, Ipos, Dpos, Fpos, MotorControlAlgorithm.LegacyPID);
                     hw.St4.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, st4CoeffPos);
-                if(prevCoeffVelo.p != st4CoeffVelo.p || prevCoeffVelo.i != st4CoeffVelo.i
-                        || prevCoeffVelo.d != st4CoeffVelo.d || prevCoeffVelo.f != st4CoeffVelo.f)
-                    hw.St4.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, st4CoeffVelo);*/
+                    cox++;
+                }
+                if(Pvelo != st4CoeffVelo.p || Ivelo != st4CoeffVelo.i
+                        || Dvelo != st4CoeffVelo.d || Fvelo != st4CoeffVelo.f) {
+                    st4CoeffVelo = new PIDFCoefficients(Pvelo, Ivelo, Dvelo, Fvelo);
+                    hw.St4.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, st4CoeffVelo);
+                    cox++;
+                }
 
                 // run to position
                 if(gamepad1.dpad_left) {
@@ -64,9 +95,14 @@ public class PIDTuner extends LinearOpMode {
 
                     targetPosition = position;
 
-                    while(hw.St4.isBusy()) {
+                    while(hw.St4.isBusy() && !gamepad1.x && opModeIsActive()) {
                         telemetry.addData("currentPosition", hw.St4.getCurrentPosition());
                         telemetry.addData("targetPosition", targetPosition);
+                        telemetry.addData("PidPos", st4CoeffPos);
+                        telemetry.addData("PidVelo", st4CoeffVelo);
+                        telemetry.addData("prevPos", prevCoeffPos);
+                        telemetry.addData("prevVelo", prevCoeffVelo);
+                        telemetry.addData("cox", cox);
                         telemetry.update();
                     }
                 } else if(gamepad1.dpad_right) {
@@ -79,9 +115,14 @@ public class PIDTuner extends LinearOpMode {
 
                     targetPosition = position;
 
-                    while(hw.St4.isBusy()) {
+                    while(hw.St4.isBusy() && !gamepad1.x && opModeIsActive()) {
                         telemetry.addData("currentPosition", hw.St4.getCurrentPosition());
                         telemetry.addData("targetPosition", targetPosition);
+                        telemetry.addData("PidPos", st4CoeffPos);
+                        telemetry.addData("PidVelo", st4CoeffVelo);
+                        telemetry.addData("prevPos", prevCoeffPos);
+                        telemetry.addData("prevVelo", prevCoeffVelo);
+                        telemetry.addData("cox", cox);
                         telemetry.update();
                     }
                 }
@@ -89,11 +130,17 @@ public class PIDTuner extends LinearOpMode {
                 // send values to dashboard
                 telemetry.addData("targetPosition", targetPosition);
                 telemetry.addData("currentPosition", currentPosition);
+                telemetry.addData("PidPos", st4CoeffPos);
+                telemetry.addData("PidVelo", st4CoeffVelo);
+                telemetry.addData("prevPos", prevCoeffPos);
+                telemetry.addData("prevVelo", prevCoeffVelo);
+
+                telemetry.addData("cox", cox);
                 telemetry.update();
 
                 // prepare for next iteration
-                prevCoeffPos = st4CoeffPos;
-                prevCoeffVelo = st4CoeffVelo;
+                prevCoeffPos = new PIDFCoefficients(st4CoeffPos);
+                prevCoeffVelo = new PIDFCoefficients(st4CoeffVelo);
             }
         }
     }

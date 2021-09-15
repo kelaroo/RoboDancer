@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.MotorControlAlgorithm;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ReadWriteFile;
 
@@ -34,6 +36,12 @@ public class RoboDancerConfig {
     public Servo cap;
 
     String calibrationFileName = "roboDansatorCalibration.json";
+
+    public static PIDFCoefficients st4CoeffPos = new PIDFCoefficients(15, 0.5, 5, 0, MotorControlAlgorithm.LegacyPID);
+    public static PIDFCoefficients st4CoeffVelo = new PIDFCoefficients(30, 0.6, 5, 0);
+
+    public static PIDFCoefficients dr4CoeffPos = new PIDFCoefficients(15, 0.5, 5, 0, MotorControlAlgorithm.LegacyPID);
+    public static PIDFCoefficients dr4CoeffVelo = new PIDFCoefficients(30, 0.6, 5, 0);
 
     public static int st4Pos = 0;
     public static int dr4Pos = 0;
@@ -70,6 +78,15 @@ public class RoboDancerConfig {
             st4Pos = calibrationData.get("st4Pos");
             dr4Pos = calibrationData.get("dr4Pos");
         }
+
+        St4.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, st4CoeffPos);
+        St4.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, st4CoeffVelo);
+
+        Dr4.setPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION, dr4CoeffPos);
+        Dr4.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, dr4CoeffVelo);
+
+        St4.setTargetPositionTolerance(7);
+        Dr4.setTargetPositionTolerance(7);
 
     }
 
