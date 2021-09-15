@@ -27,6 +27,8 @@ public class PIDTuner extends LinearOpMode {
 
         waitForStart();
 
+        telemetry.addData("PIDPos", hw.St4.getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION));
+        telemetry.addData("PIDVelo", hw.St4.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
         telemetry.addData("Tuning", "press x for st4 or y for dr4");
         telemetry.update();
 
@@ -52,7 +54,7 @@ public class PIDTuner extends LinearOpMode {
                     hw.St4.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, st4CoeffVelo);
 
                 // run to position
-                if(gamepad1.dpad_left) {
+                /*if(gamepad1.dpad_left) {
                     hw.motorSetPosition(hw.St4, 0.1, hw.st4Pos, RoboDancerDansuri.POWER4);
 
                     targetPosition = (int)(0.1 * hw.st4Pos);
@@ -60,7 +62,10 @@ public class PIDTuner extends LinearOpMode {
                     hw.motorSetPosition(hw.St4, 0.7, hw.st4Pos, RoboDancerDansuri.POWER4);
 
                     targetPosition = (int)(0.7 * hw.st4Pos);
-                }
+                }*/
+                hw.motorSetPosition(hw.St4, 0.7, hw.st4Pos, RoboDancerDansuri.POWER4);
+
+                targetPosition = (int)(0.7 * hw.st4Pos);
 
                 // send values to dashboard
                 telemetry.addData("targetPosition", targetPosition);
