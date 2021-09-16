@@ -55,6 +55,9 @@ public class RoboDancerConfig {
         leftBack = hw.get(DcMotor.class, "leftBack");
         leftFront = hw.get(DcMotor.class, "leftFront");*/
 
+        lastSt4 = Double.NaN;
+        lastDr4 = Double.NaN;
+
         Dr1 = hw.get(Servo.class, "dreapta1");
         Dr2 = hw.get(Servo.class, "dreapta2");
         Dr3 = hw.get(Servo.class, "dreapta3");
