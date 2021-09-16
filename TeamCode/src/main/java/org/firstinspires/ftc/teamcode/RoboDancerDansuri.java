@@ -35,7 +35,6 @@ public class RoboDancerDansuri extends LinearOpMode {
 
     enum dansuri {}
     int ok;
-    int okS;
     Thread spin = null;
 
     @Override
@@ -88,20 +87,19 @@ public class RoboDancerDansuri extends LinearOpMode {
                 dans = 3;
                 ok = 0;
             } else if (gamepad1.left_bumper) {
-                dans = 2; // salut stanga
-                okS = 0;
+                dans = 2;
             } else if (gamepad1.x) {
                 dans = 1; // macarena
             } else if (gamepad1.y) {
-                dans = 0; // init
+                dans = 0;
             } else if (gamepad1.b) {
-                dans = 4; // ketchup
+                dans = 4; // kethup
             } else if (gamepad1.dpad_right) {
                 dans = 5; // dab dreapta
             } else if (gamepad1.dpad_left) {
-                dans = 6; // dab stanga
+                dans = 6;
             } else if (gamepad1.dpad_down) {
-                dans = 7; // sheesh
+                dans = 7;
             }
 
             if (dans == 0) {
@@ -135,9 +133,6 @@ public class RoboDancerDansuri extends LinearOpMode {
             }
             if (dans == 7) {
                 sheesh();
-            }
-            if (dans == 2) {
-                salutStanga();
             }
 
             telemetry.addData("dr1", hw.Dr1.getPosition());
@@ -224,14 +219,14 @@ public class RoboDancerDansuri extends LinearOpMode {
         hw.Dr1.setPosition(0.84);
         hw.Dr2.setPosition(0.84);
         hw.Dr3.setPosition(0.75);
-        hw.motorSetPosition(hw.Dr4, 0.5, hw.dr4Pos, POWER4);
+        hw.motorSetPosition(hw.Dr4, 0.41, hw.dr4Pos, POWER4);
 
         waitTimer(500);
 
         hw.St1.setPosition(0.53);
         hw.St2.setPosition(0.1);
         hw.St3.setPosition(0.2);
-        hw.motorSetPosition(hw.St4, 0.5, hw.st4Pos, POWER4);
+        hw.motorSetPosition(hw.St4, 0.58, hw.st4Pos, POWER4);
 
         waitTimer(500);
 
@@ -246,72 +241,70 @@ public class RoboDancerDansuri extends LinearOpMode {
         hw.Dr1.setPosition(0.42);
         hw.Dr2.setPosition(0.61);
         hw.Dr3.setPosition(0.1);
-        hw.motorSetPosition(hw.Dr4, 0.81, hw.dr4Pos, POWER4); //////////////
+        hw.motorSetPosition(hw.Dr4, 0.12, hw.dr4Pos, POWER4);
 
         waitTimer(500);
 
         hw.St1.setPosition(0.86);
         hw.St2.setPosition(0.3);
         hw.St3.setPosition(0.5);
-        hw.motorSetPosition(hw.St4, 0.7, hw.st4Pos, POWER4); //////////////////////////////
+        hw.motorSetPosition(hw.St4, 0.75, hw.st4Pos, POWER4);
 
         waitTimer(600);
 
         hw.Dr1.setPosition(0.7);
-        hw.motorSetPosition(hw.Dr4, 0.57, hw.dr4Pos, POWER4);
 
         waitTimer(200);
 
         hw.Dr2.setPosition(0.5);
         hw.Dr3.setPosition(1);
-        hw.motorSetPosition(hw.Dr4, 0.17, hw.dr4Pos, POWER4);
-        // hw.motorSetPosition(hw.Dr4, 0.74, hw.dr4Pos, POWER4);
+        hw.motorSetPosition(hw.Dr4, 0.74, hw.dr4Pos, POWER4);
 
         waitTimer(200);
 
-        hw.Dr1.setPosition(0.4);
+        hw.Dr1.setPosition(0.3);
 
         waitTimer(500);
 
         hw.St1.setPosition(1);
         hw.St2.setPosition(0.43);
-        hw.St3.setPosition(0.05);
-        hw.motorSetPosition(hw.St4, 0.1, hw.st4Pos, POWER4);
+        hw.St3.setPosition(0);
+        hw.motorSetPosition(hw.St4, 0.23, hw.st4Pos, POWER4);
 
         waitTimer(500);
 
         hw.Dr1.setPosition(0.84);
-        hw.Dr2.setPosition(0.6);
+        hw.Dr2.setPosition(0.55);
         hw.Dr3.setPosition(0);
-        hw.motorSetPosition(hw.Dr4, 0.8, hw.dr4Pos, POWER4);
+        hw.motorSetPosition(hw.Dr4, 0.1, hw.dr4Pos, POWER4);
 
         waitTimer(500);
 
-        hw.St2.setPosition(0.4);
-        hw.St3.setPosition(0.8);
-        hw.motorSetPosition(hw.St4, 0.68, hw.st4Pos, POWER4);
-        hw.St1.setPosition(0.55);
+        hw.St2.setPosition(0.35);
+        hw.St3.setPosition(0.7);
+        hw.motorSetPosition(hw.St4, 0.76, hw.st4Pos, POWER4);
+        hw.St1.setPosition(0.6);
 
         waitTimer(500);
 
-        hw.motorSetPosition(hw.Dr4, 0.32, hw.dr4Pos, POWER4);
+        hw.motorSetPosition(hw.Dr4, 0.75, hw.dr4Pos, POWER4);
 
         waitTimer(200);
 
-        hw.Dr1.setPosition(0.5);
+        hw.Dr1.setPosition(0.4);
 
         waitTimer(200);
 
-        hw.Dr2.setPosition(0.9);
-        hw.Dr3.setPosition(0);
+        hw.Dr2.setPosition(1);
+        hw.Dr3.setPosition(0.4);
 
         waitTimer(200);
 
-        hw.motorSetPosition(hw.St4, 0.32, hw.st4Pos, POWER4);
+        hw.motorSetPosition(hw.St4, 0.23, hw.st4Pos, POWER4);
 
         waitTimer(200);
 
-        hw.St1.setPosition(0.9);
+        hw.St1.setPosition(0.93);
         hw.St2.setPosition(0);
         hw.St3.setPosition(0.7);
 
@@ -781,16 +774,16 @@ public class RoboDancerDansuri extends LinearOpMode {
 
     public void salut()
     {
-        if (ok == 0) {
+        if(ok==0) {
             hw.cap.setPosition(.585);
             hw.Dr2.setPosition(0.5);
             hw.Dr3.setPosition(1);
             hw.motorSetPosition(hw.Dr4, .15, hw.dr4Pos, POWER4);
             waitTimer(150);
 
-            hw.St2.setPosition(0.45);
+            hw.St2.setPosition(.45);
             hw.St3.setPosition(0);
-            hw.motorSetPosition(hw.St4, 0.13, hw.st4Pos, POWER4);
+            hw.motorSetPosition(hw.St4, .13, hw.st4Pos, POWER4);
             waitTimer(150);
         }
 
@@ -806,42 +799,19 @@ public class RoboDancerDansuri extends LinearOpMode {
     public void sheesh() {
         hw.cap.setPosition(.585);
 
-        hw.Dr1.setPosition(0.84);
+        hw.Dr1.setPosition(.84);
         hw.Dr2.setPosition(0.15);
         hw.Dr3.setPosition(0.5);
-        hw.motorSetPosition(hw.Dr4, 0.45, hw.dr4Pos, POWER4);
+        hw.motorSetPosition(hw.Dr4, 0.38, hw.dr4Pos, POWER4);
         waitTimer(150);
 
         hw.St1.setPosition(0.6);
-        hw.St2.setPosition(0.45);
+        hw.St2.setPosition(.45);
         hw.St3.setPosition(0.4);
         hw.motorSetPosition(hw.St4, 0.8, hw.st4Pos, POWER4);
         waitTimer(150);
     }
 
-    public void salutStanga() {
-
-        if (okS == 0) {
-            hw.Dr1.setPosition(0.55);
-            hw.Dr2.setPosition(0.9);
-            hw.Dr3.setPosition(0);
-            hw.motorSetPosition(hw.Dr4, 0.3, hw.dr4Pos, POWER4);
-
-            hw.St1.setPosition(0.52);
-            hw.St2.setPosition(0.45);
-            hw.St3.setPosition(0);
-            hw.motorSetPosition(hw.St4, 0.13, hw.st4Pos, POWER4);
-        }
-
-        hw.St1.setPosition(1);
-        waitTimer(500);
-
-        hw.St1.setPosition(0.6);
-        waitTimer(500);
-
-
-
-    }
 
     public void waitTimer (int miliseconds) {
         ElapsedTime timer;
