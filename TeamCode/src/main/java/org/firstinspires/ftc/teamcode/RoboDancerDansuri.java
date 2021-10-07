@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class RoboDancerDansuri extends LinearOpMode {
 
     RoboDancerConfig hw;
-    SoundManager soundManager;
+    //SoundManager soundManager;
     ElapsedTime macarenaCD = null;
 
     double coeff = 0.8;
@@ -40,12 +40,12 @@ public class RoboDancerDansuri extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        soundManager = new SoundManager(hardwareMap);
+        //soundManager = new SoundManager(hardwareMap);
 
-        if(soundManager.addFile("macarena") == false) {
+        /*if(soundManager.addFile("macarena") == false) {
             telemetry.addData("macarena", "not found");
         }
-        telemetry.update();
+        telemetry.update();*/
 
 
         hw = new RoboDancerConfig(hardwareMap);
@@ -214,7 +214,7 @@ public class RoboDancerDansuri extends LinearOpMode {
     }
 
     public void macarenaDance () {
-        soundManager.playSound("macarena");
+        //soundManager.playSound("macarena");
 
         hw.Dr1.setPosition(0.84);
         hw.Dr2.setPosition(0.84);

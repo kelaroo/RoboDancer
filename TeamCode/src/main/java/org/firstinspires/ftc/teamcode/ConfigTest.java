@@ -12,12 +12,16 @@ public class ConfigTest extends OpMode {
     public DcMotor rightBack;
     public DcMotor leftBack;
 
+    RoboDancerConfig hw;
+
     @Override
     public void init() {
         rightBack = hardwareMap.get(DcMotor.class, "rightBack");
         rightFront = hardwareMap.get(DcMotor.class, "rightFront");
         leftBack = hardwareMap.get(DcMotor.class, "leftBack");
         leftFront = hardwareMap.get(DcMotor.class, "leftFront");
+
+        hw = new RoboDancerConfig(hardwareMap);
     }
 
     @Override
@@ -41,5 +45,20 @@ public class ConfigTest extends OpMode {
             leftFront.setPower(0.5);
         else
             leftFront.setPower(0);
+
+        if(gamepad1.x) {
+            hw.St4.setPower(-0.2);
+        } else {
+            hw.St4.setPower(0);
+        }
+
+        if(gamepad1.b) {
+            hw.Dr4.setPower(-0.2);
+        } else {
+            hw.Dr4.setPower(0);
+        }
+
+        telemetry.addData("St4", hw.St4.getCurrentPosition());
+        telemetry.addData("Dr4", hw.Dr4.getCurrentPosition());
     }
 }
