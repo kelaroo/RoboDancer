@@ -35,11 +35,13 @@ public class RoboDancerDansuri extends LinearOpMode {
 
     enum dansuri {}
     int ok;
+    int okS;
     Thread spin = null;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
+        //region Util init
         soundManager = new SoundManager(hardwareMap);
 
         if(soundManager.addFile("macarena") == false) {
@@ -49,7 +51,9 @@ public class RoboDancerDansuri extends LinearOpMode {
 
 
         hw = new RoboDancerConfig(hardwareMap);
+        //endregion
 
+        //region Positions init
         telemetry.addData("Warning", "If you did not set the motors to the 0 position, restart the TeleOp!");
         telemetry.update();
 
@@ -64,17 +68,19 @@ public class RoboDancerDansuri extends LinearOpMode {
         hw.motorSetPosition(hw.Dr4, dr4, hw.dr4Pos, POWER4);
 
         hw.cap.setPosition(cap);
+        //endregion
 
         waitForStart();
 
         while (opModeIsActive()) {
 
-
+            //region Dance Selection
             if (gamepad1.dpad_up) {
                 dans = 3;
                 ok = 0;
             } else if (gamepad1.left_bumper) {
                 dans = 2;
+                okS = 0;
             } else if (gamepad1.x) {
                 dans = 1; // macarena
             } else if (gamepad1.y) {
@@ -88,7 +94,9 @@ public class RoboDancerDansuri extends LinearOpMode {
             } else if (gamepad1.dpad_down) {
                 dans = 7;
             }
+            //endregion
 
+            //region Dance Calls
             if (dans == 0) {
                 hw.St1.setPosition(st1);
                 hw.St2.setPosition(st2);
@@ -106,7 +114,8 @@ public class RoboDancerDansuri extends LinearOpMode {
                 macarenaDance();
             }
             if (dans == 2) {
-                vals();
+                salutStanga();
+                okS = 1;
             }
             if (dans == 4) {
                 KetchupDance();
@@ -124,7 +133,9 @@ public class RoboDancerDansuri extends LinearOpMode {
             if (dans == 7) {
                 sheesh();
             }
+            //endregion
 
+            //region Telemetry
             telemetry.addData("dr1", hw.Dr1.getPosition());
             telemetry.addData("dr2", hw.Dr2.getPosition());
             telemetry.addData("dr3", hw.Dr3.getPosition());
@@ -136,26 +147,13 @@ public class RoboDancerDansuri extends LinearOpMode {
             telemetry.addData("st4", hw.St4.getCurrentPosition());
             telemetry.update();
             //telemetry.addData("st1", String.format("%f, %f", hw.St1.getPosition()));
-
-        /*if(gamepad1.left_stick_button){
-            if(macarenaCD == null || macarenaCD.milliseconds() >= 180000){
-                soundManager.playSound("macarena");
-                macarenaCD = new ElapsedTime();
-            }
-        }*/
-            // Wobble claw
-       /* if(gamepad2.dpad_right) {
-            hw.clawWobble.setPosition(CLAW_PRINS);
-        } else if(gamepad2.dpad_left && !gamepad2.dpad_up) {
-            hw.clawWobble.setPosition(CLAW_LASAT);
-            if(oosCD == null || oosCD.milliseconds() >= 700) {
-                soundManager.playSound("oos");
-                oosCD = new ElapsedTime();
-            }
-        }*/
+            //endregion
         }
     }
 
+    ////////////////// Dance functions
+
+    //region waveDreapta()
     public void waveDreapta ( int nrRep){
         hw.Dr1.setPosition(0);
         int cont = 0;
@@ -168,7 +166,9 @@ public class RoboDancerDansuri extends LinearOpMode {
         }
         hw.Dr1.setPosition(dr1);
     }
+    //endregion
 
+    //region waveStanga()
     public void waveStanga(int nrRep) {
         hw.St1.setPosition(0.8);
         int cont = 0;
@@ -181,7 +181,9 @@ public class RoboDancerDansuri extends LinearOpMode {
         }
         hw.St1.setPosition(st1);
     }
+    //endregion
 
+    //region dans()
     public void dans ( int nrRep){
         int cont = 0;
         while (cont < nrRep) {
@@ -203,6 +205,7 @@ public class RoboDancerDansuri extends LinearOpMode {
             cont++;
         }
     }
+    //endregion
 
     public void macarenaDance () {
         soundManager.playSound("macarena");
@@ -210,14 +213,14 @@ public class RoboDancerDansuri extends LinearOpMode {
         hw.Dr1.setPosition(0.84);
         hw.Dr2.setPosition(0.84);
         hw.Dr3.setPosition(0.75);
-        hw.motorSetPosition(hw.Dr4, 0.41, hw.dr4Pos, POWER4);
+        hw.motorSetPosition(hw.Dr4, 0.5, hw.dr4Pos, POWER4);
 
         waitTimer(500);
 
         hw.St1.setPosition(0.53);
         hw.St2.setPosition(0.1);
         hw.St3.setPosition(0.2);
-        hw.motorSetPosition(hw.St4, 0.58, hw.st4Pos, POWER4);
+        hw.motorSetPosition(hw.St4, 0.5, hw.st4Pos, POWER4);
 
         waitTimer(500);
 
@@ -232,70 +235,71 @@ public class RoboDancerDansuri extends LinearOpMode {
         hw.Dr1.setPosition(0.42);
         hw.Dr2.setPosition(0.61);
         hw.Dr3.setPosition(0.1);
-        hw.motorSetPosition(hw.Dr4, 0.12, hw.dr4Pos, POWER4);
+        hw.motorSetPosition(hw.Dr4, 0.81, hw.dr4Pos, POWER4);
 
         waitTimer(500);
 
         hw.St1.setPosition(0.86);
         hw.St2.setPosition(0.3);
         hw.St3.setPosition(0.5);
-        hw.motorSetPosition(hw.St4, 0.75, hw.st4Pos, POWER4);
+        hw.motorSetPosition(hw.St4, 0.7, hw.st4Pos, POWER4);
 
         waitTimer(600);
 
         hw.Dr1.setPosition(0.7);
+        hw.motorSetPosition(hw.Dr4, 0.57, hw.dr4Pos, POWER4);
 
         waitTimer(200);
 
         hw.Dr2.setPosition(0.5);
         hw.Dr3.setPosition(1);
-        hw.motorSetPosition(hw.Dr4, 0.74, hw.dr4Pos, POWER4);
-
-        waitTimer(200);
-
-        hw.Dr1.setPosition(0.3);
-
-        waitTimer(500);
-
-        hw.St1.setPosition(1);
-        hw.St2.setPosition(0.43);
-        hw.St3.setPosition(0);
-        hw.motorSetPosition(hw.St4, 0.23, hw.st4Pos, POWER4);
-
-        waitTimer(500);
-
-        hw.Dr1.setPosition(0.84);
-        hw.Dr2.setPosition(0.55);
-        hw.Dr3.setPosition(0);
-        hw.motorSetPosition(hw.Dr4, 0.1, hw.dr4Pos, POWER4);
-
-        waitTimer(500);
-
-        hw.St2.setPosition(0.35);
-        hw.St3.setPosition(0.7);
-        hw.motorSetPosition(hw.St4, 0.76, hw.st4Pos, POWER4);
-        hw.St1.setPosition(0.6);
-
-        waitTimer(500);
-
-        hw.motorSetPosition(hw.Dr4, 0.75, hw.dr4Pos, POWER4);
+        hw.motorSetPosition(hw.Dr4, 0.17, hw.dr4Pos, POWER4);
 
         waitTimer(200);
 
         hw.Dr1.setPosition(0.4);
 
+        waitTimer(500);
+
+        hw.St1.setPosition(1);
+        hw.St2.setPosition(0.43);
+        hw.St3.setPosition(0.05);
+        hw.motorSetPosition(hw.St4, 0.1, hw.st4Pos, POWER4);
+
+        waitTimer(500);
+
+        hw.Dr1.setPosition(0.84);
+        hw.Dr2.setPosition(0.6);
+        hw.Dr3.setPosition(0);
+        hw.motorSetPosition(hw.Dr4, 0.8, hw.dr4Pos, POWER4);
+
+        waitTimer(500);
+
+        hw.St2.setPosition(0.4);
+        hw.St3.setPosition(0.8);
+        hw.motorSetPosition(hw.St4, 0.68, hw.st4Pos, POWER4);
+        hw.St1.setPosition(0.55);
+
+        waitTimer(500);
+
+        hw.motorSetPosition(hw.Dr4, 0.32, hw.dr4Pos, POWER4);
+
         waitTimer(200);
 
-        hw.Dr2.setPosition(1);
-        hw.Dr3.setPosition(0.4);
+        hw.Dr1.setPosition(0.5);
 
         waitTimer(200);
 
-        hw.motorSetPosition(hw.St4, 0.23, hw.st4Pos, POWER4);
+        hw.Dr2.setPosition(0.9);
+        hw.Dr3.setPosition(0);
 
         waitTimer(200);
 
-        hw.St1.setPosition(0.93);
+        hw.motorSetPosition(hw.St4, 0.32, hw.st4Pos, POWER4);
+
+        waitTimer(200);
+
+        hw.St1.setPosition(0.9);
         hw.St2.setPosition(0);
         hw.St3.setPosition(0.7);
 
@@ -330,7 +334,9 @@ public class RoboDancerDansuri extends LinearOpMode {
         hw.rightBack.setPower(0);
         hw.leftBack.setPower(0);*/
     }
+    //endregion
 
+    //region KetchupDance
     public void KetchupDance ()
     {
         // ...........1...........
@@ -730,6 +736,7 @@ public class RoboDancerDansuri extends LinearOpMode {
 
         waitTimer(2000);
     }
+    //endregion
 
     public void dabStanga() {
         hw.Dr1.setPosition(.75);
@@ -801,6 +808,30 @@ public class RoboDancerDansuri extends LinearOpMode {
         hw.St3.setPosition(0.4);
         hw.motorSetPosition(hw.St4, 0.8, hw.st4Pos, POWER4);
         waitTimer(150);
+    }
+
+    public void salutStanga() {
+
+        if (okS == 0) {
+            hw.Dr1.setPosition(0.55);
+            hw.Dr2.setPosition(0.9);
+            hw.Dr3.setPosition(0);
+            hw.motorSetPosition(hw.Dr4, 0.3, hw.dr4Pos, POWER4);
+
+            hw.St1.setPosition(0.52);
+            hw.St2.setPosition(0.45);
+            hw.St3.setPosition(0);
+            hw.motorSetPosition(hw.St4, 0.13, hw.st4Pos, POWER4);
+        }
+
+        hw.St1.setPosition(1);
+        waitTimer(500);
+
+        hw.St1.setPosition(0.6);
+        waitTimer(500);
+
+
+
     }
 
     public void vals()
