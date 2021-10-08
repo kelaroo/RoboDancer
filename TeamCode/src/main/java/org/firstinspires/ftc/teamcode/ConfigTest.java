@@ -32,7 +32,7 @@ public class ConfigTest extends OpMode {
             rightFront.setPower(0);
 
         if(gamepad1.dpad_up)
-            rightBack.setPower(0.5);
+            rightBack.setPower(0.25);
         else
             rightBack.setPower(0);
 

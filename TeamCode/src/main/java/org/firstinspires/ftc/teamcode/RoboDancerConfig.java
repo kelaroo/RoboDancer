@@ -20,10 +20,10 @@ import java.util.List;
 import java.util.Map;
 
 public class RoboDancerConfig {
-    /*public DcMotor rightFront;
+    public DcMotor rightFront;
     public DcMotor leftFront;
     public DcMotor rightBack;
-    public DcMotor leftBack;*/
+    public DcMotor leftBack;
     public Servo Dr1;
     public Servo Dr2;
     public Servo Dr3;
@@ -50,11 +50,12 @@ public class RoboDancerConfig {
     public static double lastDr4 = Double.NaN;
 
     public RoboDancerConfig(HardwareMap hw) {
-        /*rightBack = hw.get(DcMotor.class, "rightBack");
+        rightBack = hw.get(DcMotor.class, "rightBack");
         rightFront = hw.get(DcMotor.class, "rightFront");
         leftBack = hw.get(DcMotor.class, "leftBack");
-        leftFront = hw.get(DcMotor.class, "leftFront");*/
-
+        leftFront = hw.get(DcMotor.class, "leftFront");
+        leftBack.setDirection(DcMotorSimple.Direction.REVERSE);
+        leftFront.setDirection(DcMotorSimple.Direction.REVERSE);
         lastSt4 = Double.NaN;
         lastDr4 = Double.NaN;
 
@@ -90,6 +91,8 @@ public class RoboDancerConfig {
 
         St4.setTargetPositionTolerance(7);
         Dr4.setTargetPositionTolerance(7);
+
+        resetEncoders();
 
     }
 

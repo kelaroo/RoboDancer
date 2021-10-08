@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 public class RoboDancerDansuri extends LinearOpMode {
 
     RoboDancerConfig hw;
-    //SoundManager soundManager;
+    SoundManager soundManager;
     ElapsedTime macarenaCD = null;
 
     double coeff = 0.8;
@@ -40,12 +40,12 @@ public class RoboDancerDansuri extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
 
-        //soundManager = new SoundManager(hardwareMap);
+        soundManager = new SoundManager(hardwareMap);
 
-        /*if(soundManager.addFile("macarena") == false) {
+        if(soundManager.addFile("macarena") == false) {
             telemetry.addData("macarena", "not found");
         }
-        telemetry.update();*/
+        telemetry.update();
 
 
         hw = new RoboDancerConfig(hardwareMap);
@@ -68,19 +68,6 @@ public class RoboDancerDansuri extends LinearOpMode {
         waitForStart();
 
         while (opModeIsActive()) {
-            double drive = -gamepad1.left_stick_y;
-            double strafe = gamepad1.left_stick_x;
-            double rotate = gamepad1.right_stick_x;
-
-            double RF = hw.clipPower(drive - strafe - rotate) * coeff;
-            double RB = hw.clipPower(drive - strafe - rotate) * coeff;
-            double LB = hw.clipPower(drive + strafe + rotate) * coeff;
-            double LF = hw.clipPower(drive + strafe + rotate) * coeff;
-
-            /*hw.leftFront.setPower(LF);
-            hw.leftBack.setPower(LB);
-            hw.rightFront.setPower(RF);
-            hw.rightBack.setPower(RB);*/
 
 
             if (gamepad1.dpad_up) {
@@ -118,6 +105,9 @@ public class RoboDancerDansuri extends LinearOpMode {
             if (dans == 1) {
                 macarenaDance();
             }
+            if (dans == 2) {
+                vals();
+            }
             if (dans == 4) {
                 KetchupDance();
             }
@@ -144,6 +134,7 @@ public class RoboDancerDansuri extends LinearOpMode {
             telemetry.addData("st2", hw.St2.getPosition());
             telemetry.addData("st3", hw.St3.getPosition());
             telemetry.addData("st4", hw.St4.getCurrentPosition());
+            telemetry.update();
             //telemetry.addData("st1", String.format("%f, %f", hw.St1.getPosition()));
 
         /*if(gamepad1.left_stick_button){
@@ -214,7 +205,7 @@ public class RoboDancerDansuri extends LinearOpMode {
     }
 
     public void macarenaDance () {
-        //soundManager.playSound("macarena");
+        soundManager.playSound("macarena");
 
         hw.Dr1.setPosition(0.84);
         hw.Dr2.setPosition(0.84);
@@ -796,7 +787,7 @@ public class RoboDancerDansuri extends LinearOpMode {
         waitTimer(500);
     }
 
-    public void sheesh() {
+        public void sheesh() {
         hw.cap.setPosition(.585);
 
         hw.Dr1.setPosition(.84);
@@ -812,7 +803,10 @@ public class RoboDancerDansuri extends LinearOpMode {
         waitTimer(150);
     }
 
+    public void vals()
+    {
 
+    }
     public void waitTimer (int miliseconds) {
         ElapsedTime timer;
         timer = new ElapsedTime();
